@@ -3,7 +3,7 @@ line-length = 88
 
 [tool.flake8]
 max-line-length = 88
-ignore = []
+ignore = ["W503"]
 
 [tool.isort]
 profile = "black"
