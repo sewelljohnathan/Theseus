@@ -21,7 +21,7 @@ def main():
     icon_image = pygame.image.load(icon_path).convert_alpha()
     pygame.display.set_icon(icon_image)
 
-    battle = BattleScene()
+    game_state.scene = BattleScene()
 
     is_running = True
     while is_running:
@@ -30,7 +30,8 @@ def main():
                 is_running = False
                 pygame.quit()
                 quit()
-        battle.run()
+
+        game_state.scene.run()
         pygame.display.update()
 
 

@@ -2,6 +2,8 @@
 
 import pygame
 
+from scenes.scene import Scene
+
 singleton = None
 
 
@@ -9,6 +11,7 @@ class GameState:
     """GameState class."""
 
     screen: pygame.Surface
+    scene: Scene
 
     def __new__(cls):
         """Generate singleton object."""
