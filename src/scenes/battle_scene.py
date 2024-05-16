@@ -3,6 +3,7 @@
 import pygame
 
 from button import Button
+from gamestate import GameState
 from scenes.scene import Scene
 from text import TextWrapper
 
@@ -10,7 +11,7 @@ from text import TextWrapper
 class BattleScene(Scene):
     """Battle Scene."""
 
-    def __init__(self, screen):
+    def __init__(self):
         """Initialize Battle scene."""
         self.attack_button = Button(
             "1) Attack",
@@ -18,7 +19,7 @@ class BattleScene(Scene):
             510,
             150,
             30,
-            lambda: TextWrapper("Attacking!", (500, 300, 100, 100)).draw(screen),
+            TextWrapper("Attacking!", (500, 300, 100, 100)).draw,
         )
         self.defend_button = Button(
             "2) Defend",
@@ -26,7 +27,7 @@ class BattleScene(Scene):
             550,
             150,
             30,
-            lambda: TextWrapper("Defending!", (500, 300, 100, 100)).draw(screen),
+            TextWrapper("Defending!", (500, 300, 100, 100)).draw,
         )
         self.run_button = Button(
             "3) RUN",
@@ -34,19 +35,21 @@ class BattleScene(Scene):
             590,
             150,
             30,
-            lambda: TextWrapper("Running!", (500, 300, 100, 100)).draw(screen),
+            TextWrapper("Running!", (500, 300, 100, 100)).draw,
         )
 
-    def run(self, screen):
+    def run(self):
         """Draw the battle scene."""
-        screen.fill((100, 0, 255))
+        game_state = GameState()
+
+        game_state.screen.fill((100, 0, 255))
 
         battle_window = pygame.Rect(30, 30, 1220, 450)
-        pygame.draw.rect(screen, (200, 200, 200), battle_window)
+        pygame.draw.rect(game_state.screen, (200, 200, 200), battle_window)
 
         options_window = pygame.Rect(30, 500, 1220, 200)
-        pygame.draw.rect(screen, (200, 200, 200), options_window)
+        pygame.draw.rect(game_state.screen, (200, 200, 200), options_window)
 
-        self.attack_button.draw(screen)
-        self.defend_button.draw(screen)
-        self.run_button.draw(screen)
+        self.attack_button.draw()
+        self.defend_button.draw()
+        self.run_button.draw()

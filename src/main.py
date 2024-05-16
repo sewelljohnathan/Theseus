@@ -4,6 +4,7 @@ import os
 
 import pygame
 
+from gamestate import GameState
 from scenes.battle_scene import BattleScene
 
 
@@ -12,14 +13,15 @@ def main():
     pygame.init()
     pygame.font.init()
 
-    screen = pygame.display.set_mode((1280, 720))
+    game_state = GameState()
+    game_state.screen = pygame.display.set_mode((1280, 720))
     pygame.display.set_caption("THESEUS")
 
     icon_path = os.path.join(".", "assets", "logo.png")
     icon_image = pygame.image.load(icon_path).convert_alpha()
     pygame.display.set_icon(icon_image)
 
-    battle = BattleScene(screen)
+    battle = BattleScene()
 
     is_running = True
     while is_running:
@@ -28,7 +30,7 @@ def main():
                 is_running = False
                 pygame.quit()
                 quit()
-        battle.run(screen)
+        battle.run()
         pygame.display.update()
 
 

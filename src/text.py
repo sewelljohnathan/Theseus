@@ -4,6 +4,8 @@ import time
 
 import pygame
 
+from gamestate import GameState
+
 
 class TextWrapper:
     """Wrapper class for text."""
@@ -11,22 +13,23 @@ class TextWrapper:
     def __init__(
         self,
         text: str,
-        rect: tuple[int, int, int, int],
+        rect: pygame.Rect,
         font_name: str = "freesansbold.ttf",
-        font_size: int = 20,
-        color: tuple[int, int, int] = (0, 0, 0),
+        font_size: float = 20,
+        color: pygame.Color = (0, 0, 0),
     ):
         """Initialize TextWrapper."""
         self.text = text
-        self.rect = pygame.Rect(rect)
+        self.rect = rect
         self.font = pygame.font.Font(font_name, font_size)
         self.font_height = self.font.size("Tg")[1]
         self.color = color
 
-    def draw(self, screen: pygame.Surface):
+    def draw(self):
         """Draw text."""
         text_surface = self.font.render(self.text, True, self.color)
-        screen.blit(text_surface, self.rect)
+        game_state = GameState()
+        game_state.screen.blit(text_surface, self.rect)
 
 
 class DynamicTextWrapper(TextWrapper):
@@ -35,10 +38,10 @@ class DynamicTextWrapper(TextWrapper):
     def __init__(
         self,
         text: str,
-        rect: tuple[int, int, int, int],
+        rect: pygame.Rect,
         font_name: str = "freesansbold.ttf",
-        font_size: int = 20,
-        color: tuple[int, int, int] = (0, 0, 0),
+        font_size: float = 20,
+        color: pygame.Color = (0, 0, 0),
         display_speed: float = 50,
         display_delay: float = 0,
     ):
@@ -49,18 +52,21 @@ class DynamicTextWrapper(TextWrapper):
 
         self.display_start = None
 
-    def draw(self, screen: pygame.Surface, debug=False):
+    def draw(self, debug=False):
         """
         Draw dynamic text with wrapping.
 
         Modified from https://www.pygame.org/wiki/TextWrap
         """
+        # Get gamestate
+        game_state = GameState()
+
         # Draw debug background
         if debug:
             debug_surface = pygame.Surface((self.rect.width, self.rect.height))
             debug_surface.set_alpha(200)
             debug_surface.fill((255, 255, 255))
-            screen.blit(debug_surface, (self.rect.x, self.rect.y))
+            game_state.screen.blit(debug_surface, (self.rect.x, self.rect.y))
 
         if self.display_start is None:
             self.display_start = time.time()
@@ -100,7 +106,7 @@ class DynamicTextWrapper(TextWrapper):
 
             # render the line and blit it to the surface
             image = self.font.render(text[:i], True, self.color)
-            screen.blit(image, (self.rect.left, y))
+            game_state.screen.blit(image, (self.rect.left, y))
             y += self.font_height + lineSpacing
 
             # remove the text we just blitted

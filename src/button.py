@@ -1,7 +1,10 @@
 """Button Class."""
 
+from typing import Callable
+
 import pygame
 
+from gamestate import GameState
 from text import TextWrapper
 
 
@@ -10,17 +13,17 @@ class Button:
 
     def __init__(
         self,
-        text,
-        x,
-        y,
-        w,
-        h,
-        func,
-        color1=(0, 125, 175),
-        color2=(0, 75, 225),
-        text_color=(0, 0, 0),
-        font_name="freesansbold.ttf",
-        font_size=20,
+        text: str,
+        x: float,
+        y: float,
+        w: float,
+        h: float,
+        func: Callable,
+        color1: pygame.Color = (0, 125, 175),
+        color2: pygame.Color = (0, 75, 225),
+        text_color: pygame.Color = (0, 0, 0),
+        font_name: str = "freesansbold.ttf",
+        font_size: float = 20,
     ):
         """Initialize the button."""
         self.text = text
@@ -42,8 +45,10 @@ class Button:
             text_color,
         )
 
-    def draw(self, screen: pygame.Surface):
+    def draw(self):
         """Draw the button."""
+        game_state = GameState()
+
         button_rect = pygame.Rect(self.x, self.y, self.w, self.h)
         mouse_x, mouse_y = pygame.mouse.get_pos()
         if (
@@ -52,10 +57,14 @@ class Button:
             and mouse_y > self.y
             and mouse_y < self.y + self.h
         ):
-            pygame.draw.rect(screen, self.color2, button_rect, border_radius=5)
+            pygame.draw.rect(
+                game_state.screen, self.color2, button_rect, border_radius=5
+            )
             if pygame.mouse.get_pressed()[0]:
                 self.func()
         else:
-            pygame.draw.rect(screen, self.color1, button_rect, border_radius=5)
+            pygame.draw.rect(
+                game_state.screen, self.color1, button_rect, border_radius=5
+            )
 
-        self.text_wrapper.draw(screen)
+        self.text_wrapper.draw()
