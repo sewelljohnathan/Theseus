@@ -4,7 +4,7 @@ import os
 
 import pygame
 
-from scenes import BattleScene
+from scenes.battle_scene import BattleScene
 
 
 def main():

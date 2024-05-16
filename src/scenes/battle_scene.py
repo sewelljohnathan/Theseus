@@ -1,15 +1,10 @@
-"""Scene classes."""
+"""Battle Scene class."""
 
 import pygame
 
 from button import Button
+from scenes.scene import Scene
 from text import TextWrapper
-
-
-class Scene:
-    """Parent class for Scenes."""
-
-    ...
 
 
 class BattleScene(Scene):
