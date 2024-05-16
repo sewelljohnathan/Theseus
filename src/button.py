@@ -2,7 +2,7 @@
 
 import pygame
 
-from text import draw_text
+from text import TextWrapper
 
 
 class Button:
@@ -34,6 +34,13 @@ class Button:
         self.text_color = text_color
         self.font_name = font_name
         self.font_size = font_size
+        self.text_wrapper = TextWrapper(
+            text,
+            (x + 10, y + h / 2 - font_size / 2, w, h),
+            font_name,
+            font_size,
+            text_color,
+        )
 
     def draw(self, screen: pygame.Surface):
         """Draw the button."""
@@ -51,14 +58,4 @@ class Button:
         else:
             pygame.draw.rect(screen, self.color1, button_rect, border_radius=5)
 
-        draw_text(
-            screen,
-            self.text,
-            self.x + 10,
-            self.y + self.h / 2 - self.font_size / 2,
-            self.w,
-            self.h,
-            self.text_color,
-            self.font_name,
-            self.font_size,
-        )
+        self.text_wrapper.draw(screen)
