@@ -12,6 +12,8 @@ class GameState:
 
     screen: pygame.Surface
     scene: Scene
+    clock: pygame.time.Clock
+    key_press: str = None
 
     def __new__(cls):
         """Generate singleton object."""
